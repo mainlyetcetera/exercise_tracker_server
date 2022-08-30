@@ -23,7 +23,7 @@ function bodyValidators(keys: string[]): RequestHandler {
 }
 
 export function controller(prefix: string) {
-  return function (target: Function): void {
+  return function(target: Function): void {
     const router = AppRouter.getInstance()
 
     Object.getOwnPropertyNames(target.prototype).forEach((key) => {
