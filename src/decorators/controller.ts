@@ -3,6 +3,7 @@ import { Request, Response, RequestHandler, NextFunction } from 'express'
 import { AppRouter } from '../AppRouter'
 import { Methods } from './Methods'
 import { MetadataKeys } from './MetadataKeys'
+import { createIfNew } from '../middleware/createIfNew'
 
 function bodyValidators(keys: string[]): RequestHandler {
   return function (req: Request, res: Response, next: NextFunction): void {
@@ -47,11 +48,16 @@ export function controller(prefix: string) {
 
       const validator = bodyValidators(requiredBodyProps)
 
+      const makeNew = createIfNew()
+        
+      console.log({ middlewares })
+
       if (path) {
         router[method](
           `${prefix}${path}`,
           ...middlewares,
           validator,
+          makeNew,
           routeHandler
         )
       }
