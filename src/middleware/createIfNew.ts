@@ -8,7 +8,10 @@ export function createIfNew(
 ): void {
 
   pool.query(
-    `CREATE TABLE IF NOT EXISTS exercises(name varchar(50))`,
+    `CREATE TABLE IF NOT EXISTS exercises(
+      id SERIAL PRIMARY KEY,
+      name varchar(50)
+    )`,
     (e, _): void => {
       if (e) throw e;
       res.status(200);
@@ -16,8 +19,13 @@ export function createIfNew(
     }
   );
 
+  console.log('in-between exercises, dates');
+
   pool.query(
-    `CREATE TABLE IF NOT EXISTS dates(id SERIAL PRIMARY KEY, date DATE)`,
+    `CREATE TABLE IF NOT EXISTS dates(
+      id SERIAL PRIMARY KEY, 
+      date varchar(10)
+    )`,
     (e, _): void => {
       if (e) throw e;
       res.status(200);
