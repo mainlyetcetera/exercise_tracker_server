@@ -11,7 +11,6 @@ class ExerciseController {
   @use(createIfNew)
   postExercise(req: RequestWithBody, res: Response): void {
     try {
-      // console.log('body', req.body);
       const { name, date, set, weight, reps, exercise_id } = req.body;
 
       const handler = ((n: { name: string }): boolean => {
@@ -26,27 +25,19 @@ class ExerciseController {
           : console.log('name already exists');
       });
 
-      // pool.query('SELECT name FROM exercises', (_, r) => {
-      //   console.log({ name });
-      //   const blah = r.rows.find(n => name === n.name);
-      //   console.log({ blah });
-      //   // const { exercise_id } = r.rows.find(n => name === n.name);
-      //   // pool.query(`INSERT INTO sets (
-      //   //   set, 
-      //   //   weight, 
-      //   //   reps, 
-      //   //   date, 
-      //   //   exercise_id
-      //   // ) VALUES (
-      //   //   '${set}', 
-      //   //   '${weight}', 
-      //   //   '${reps}', 
-      //   //   '${date}', 
-      //   //   '${exercise_id}'
-      //   // )`);
-      // });
-
-      // console.log('name already exists');
+      pool.query(`INSERT INTO sets (
+        set, 
+        weight, 
+        reps, 
+        date, 
+        exercise_id
+      ) VALUES (
+        '${set}', 
+        '${weight}', 
+        '${reps}', 
+        '${date}', 
+        '${exercise_id}'
+      )`);
 
       // this needs logic to parse date and exercise id's
       // pool.query(`INSERT INTO sets (weight, reps, date_id, exercise_id) VALUES (${set})`);
