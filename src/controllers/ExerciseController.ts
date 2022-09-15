@@ -13,14 +13,8 @@ class ExerciseController {
     try {
       const { name, date, set, weight, reps, exercise_id } = req.body;
 
-      const handler = ((n: { name: string }): boolean => {
-        console.log({ name })
-        console.log('n name', n.name)
-        return name === n.name
-      })
-
       pool.query('SELECT name FROM exercises', (_, r) => {
-        r.rows.findIndex(handler) === -1
+        r.rows.findIndex((n: { name: string }): boolean => name === n.name) === -1
           ? pool.query(`INSERT INTO exercises (name, exercise_id) VALUES ('${name}', '${exercise_id}')`)
           : console.log('name already exists');
       });
@@ -39,11 +33,8 @@ class ExerciseController {
         '${exercise_id}'
       )`);
 
-      // this needs logic to parse date and exercise id's
-      // pool.query(`INSERT INTO sets (weight, reps, date_id, exercise_id) VALUES (${set})`);
       res.send(`${name} inserted`);
     } catch (err) {
-      // send error msg
       res.send(`bad juju ${err}`);
     }
   }
