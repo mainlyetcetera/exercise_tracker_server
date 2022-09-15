@@ -11,41 +11,42 @@ class ExerciseController {
   @use(createIfNew)
   postExercise(req: RequestWithBody, res: Response): void {
     try {
-      console.log('body', req.body);
-      const { name, date, set, weight, reps } = req.body;
+      // console.log('body', req.body);
+      const { name, date, set, weight, reps, exercise_id } = req.body;
+
+      const handler = ((n: { name: string }): boolean => {
+        console.log({ name })
+        console.log('n name', n.name)
+        return name === n.name
+      })
 
       pool.query('SELECT name FROM exercises', (_, r) => {
-        r.rows.findIndex(n => name === n.name) === -1
-          ? pool.query(`INSERT INTO exercises (name) VALUES ('${name}')`)
+        r.rows.findIndex(handler) === -1
+          ? pool.query(`INSERT INTO exercises (name, exercise_id) VALUES ('${name}', '${exercise_id}')`)
           : console.log('name already exists');
       });
 
-      // pool.query('SELECT date FROM dates', (_, r) => {
-      //   r.rows.findIndex(d => date === d.date) === -1
-      //     ? pool.query(`INSERT INTO dates (date) VALUES ('${date}')`)
-      //     : console.log('date already exists');
+      // pool.query('SELECT name FROM exercises', (_, r) => {
+      //   console.log({ name });
+      //   const blah = r.rows.find(n => name === n.name);
+      //   console.log({ blah });
+      //   // const { exercise_id } = r.rows.find(n => name === n.name);
+      //   // pool.query(`INSERT INTO sets (
+      //   //   set, 
+      //   //   weight, 
+      //   //   reps, 
+      //   //   date, 
+      //   //   exercise_id
+      //   // ) VALUES (
+      //   //   '${set}', 
+      //   //   '${weight}', 
+      //   //   '${reps}', 
+      //   //   '${date}', 
+      //   //   '${exercise_id}'
+      //   // )`);
       // });
 
-      pool.query('SELECT name FROM exercises', (_, r) => {
-        const blah = r.rows.find(n => name === n.name);
-        console.log({ blah });
-        // const { exercise_id } = r.rows.find(n => name === n.name);
-        // pool.query(`INSERT INTO sets (
-        //   set, 
-        //   weight, 
-        //   reps, 
-        //   date, 
-        //   exercise_id
-        // ) VALUES (
-        //   '${set}', 
-        //   '${weight}', 
-        //   '${reps}', 
-        //   '${date}', 
-        //   '${exercise_id}'
-        // )`);
-      });
-
-      console.log('name already exists');
+      // console.log('name already exists');
 
       // this needs logic to parse date and exercise id's
       // pool.query(`INSERT INTO sets (weight, reps, date_id, exercise_id) VALUES (${set})`);
