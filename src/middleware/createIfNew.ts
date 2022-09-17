@@ -15,7 +15,6 @@ export function createIfNew(
     (e, _): void => {
       if (e) throw e;
       res.status(200);
-      console.log("exercises ok");
     }
   );
 
@@ -30,7 +29,6 @@ export function createIfNew(
     (e, _): void => {
       if (e) throw e;
       res.status(200);
-      console.log("sets ok");
     }
   );
 
@@ -39,7 +37,6 @@ export function createIfNew(
     (e, _): void => {
       if (e) throw e;
       res.status(200);
-      console.log("sets ok");
     }
   );
 
