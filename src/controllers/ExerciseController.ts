@@ -33,9 +33,9 @@ class ExerciseController {
         '${exercise_id}'
       )`);
 
-      res.send(`${name} inserted`);
+      res.send(`{"result": "${name} inserted"}`);
     } catch (err) {
-      res.send(`bad juju ${err}`);
+      res.send(`{"err": "bad juju ${err}"}`);
     }
   }
 
